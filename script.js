@@ -398,6 +398,116 @@ function highlightProduct(productId) {
     }, 500);
 }
 
+// Enhanced Animation Systems
+function initializeEnhancedAnimations() {
+    // Add scroll-based scale and rotation effects
+    const scrollElements = document.querySelectorAll('.enhanced-scroll');
+    
+    window.addEventListener('scroll', () => {
+        scrollElements.forEach(element => {
+            const rect = element.getBoundingClientRect();
+            const elementCenter = rect.top + rect.height / 2;
+            const screenCenter = window.innerHeight / 2;
+            const distance = Math.abs(elementCenter - screenCenter);
+            const maxDistance = window.innerHeight / 2;
+            const proximity = Math.max(0, 1 - distance / maxDistance);
+            
+            // Apply scaling based on proximity to screen center
+            const scale = 0.95 + (proximity * 0.05);
+            element.style.transform = `scale(${scale})`;
+        });
+    }, { passive: true });
+}
+
+function initializeMagneticButtons() {
+    const magneticButtons = document.querySelectorAll('.magnetic-button');
+    
+    magneticButtons.forEach(button => {
+        const handleMouseMove = (e) => {
+            const rect = button.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            const distance = Math.sqrt(x * x + y * y);
+            const maxDistance = 100;
+            
+            if (distance < maxDistance) {
+                const strength = (maxDistance - distance) / maxDistance;
+                const moveX = x * strength * 0.3;
+                const moveY = y * strength * 0.3;
+                
+                button.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.02)`;
+            }
+        };
+        
+        const handleMouseLeave = () => {
+            button.style.transform = 'translate(0, 0) scale(1)';
+        };
+        
+        button.addEventListener('mousemove', handleMouseMove);
+        button.addEventListener('mouseleave', handleMouseLeave);
+    });
+}
+
+function initializeScrollProgressIndicator() {
+    // Create scroll progress bar
+    const progressBar = document.createElement('div');
+    progressBar.className = 'scroll-progress';
+    progressBar.innerHTML = '<div class="scroll-progress-bar"></div>';
+    document.body.appendChild(progressBar);
+    
+    const progressFill = progressBar.querySelector('.scroll-progress-bar');
+    
+    window.addEventListener('scroll', () => {
+        const scrollProgress = window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight);
+        progressFill.style.width = `${scrollProgress * 100}%`;
+    }, { passive: true });
+}
+
+function initializeStaggerAnimations() {
+    const staggerContainers = document.querySelectorAll('.stagger-animation');
+    
+    const observerOptions = {
+        threshold: 0.2,
+        rootMargin: '20px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate');
+            }
+        });
+    }, observerOptions);
+    
+    staggerContainers.forEach(container => {
+        observer.observe(container);
+    });
+}
+
+// Custom smooth scroll function with easing
+function smoothScrollTo(targetPosition, duration) {
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    let startTime = null;
+    
+    function animation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        
+        // Easing function (ease-out-cubic)
+        const easeOutCubic = 1 - Math.pow(1 - progress, 3);
+        
+        window.scrollTo(0, startPosition + distance * easeOutCubic);
+        
+        if (timeElapsed < duration) {
+            requestAnimationFrame(animation);
+        }
+    }
+    
+    requestAnimationFrame(animation);
+}
+
 // Main initialization
 document.addEventListener('DOMContentLoaded', () => {
     const isHomePage = document.body.classList.contains('home-page');
@@ -405,7 +515,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (isHomePage) {
         // Initialize home page functionality
-        initializeHomePageParallax();
+        initializeHomePage();
         initializeScrollAnimations();
     } else if (isStorePage) {
         // Initialize store page functionality
