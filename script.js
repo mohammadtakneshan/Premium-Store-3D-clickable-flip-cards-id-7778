@@ -513,6 +513,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const isHomePage = document.body.classList.contains('home-page');
     const isStorePage = document.getElementById('products-grid') !== null;
     
+    // Initialize global systems
+    window.modalSystem = new ModalSystem();
+    window.toastSystem = new ToastSystem();
+    window.loadingSystem = new LoadingSystem();
+    window.cartSystem = new CartSystem();
+    
     if (isHomePage) {
         // Initialize home page functionality
         initializeHomePage();

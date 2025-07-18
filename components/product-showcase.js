@@ -121,6 +121,10 @@ class ProductShowcase {
                         `<span class="feature-tag">${feature}</span>`
                     ).join('')}
                 </div>
+                <div class="premium-card-actions">
+                    <button class="smooth-button magnetic-button" data-action="view-details">View Details</button>
+                    <button class="smooth-button-secondary" data-action="add-to-wishlist">Add to Wishlist</button>
+                </div>
             </div>
         `;
 
@@ -164,11 +168,38 @@ class ProductShowcase {
      * Handle product card clicks
      */
     handleProductClick(event) {
+        // Check if click is on a button
+        const button = event.target.closest('button');
+        if (button) {
+            const action = button.dataset.action;
+            const card = event.target.closest('.premium-card');
+            if (!card) return;
+            
+            const productId = card.dataset.productId;
+            const product = this.products.find(p => p.id === productId);
+            
+            if (!product) {
+                console.error('Product not found:', productId);
+                return;
+            }
+            
+            if (action === 'view-details') {
+                this.showProductDetails(product);
+            } else if (action === 'add-to-wishlist') {
+                if (window.toastSystem) {
+                    window.toastSystem.showSuccess('Added to wishlist!');
+                } else {
+                    alert('Added to wishlist!');
+                }
+            }
+            return;
+        }
+        
+        // Handle card clicks (for backward compatibility)
         const card = event.target.closest('.premium-card');
         if (!card) return;
 
         const productId = card.dataset.productId;
-        const storeProductId = card.dataset.storeProductId;
         const product = this.products.find(p => p.id === productId);
 
         if (!product) {
@@ -176,8 +207,8 @@ class ProductShowcase {
             return;
         }
 
-        // Navigate to store with product highlighting
-        this.navigateToStore(product, storeProductId);
+        // Show product details
+        this.showProductDetails(product);
     }
 
     /**
@@ -221,11 +252,15 @@ class ProductShowcase {
      * Show detailed product information (future enhancement)
      */
     showProductDetails(product) {
-        // For now, just log the product details
-        console.log('Product details:', product);
+        console.log('Showing product details for:', product);
         
-        // Future: Open modal or expand card with detailed info
-        alert(`${product.name}\n\n${product.shortDescription}\n\nFeatures:\n${product.features.join('\n')}\n\nPrice: ${product.price}`);
+        // Use modal system if available
+        if (window.modalSystem) {
+            window.modalSystem.showProductModal(product);
+        } else {
+            // Fallback
+            alert(`${product.name}\n\n${product.shortDescription}\n\nFeatures:\n${product.features.join('\n')}\n\nPrice: ${product.price}`);
+        }
     }
 
     /**
