@@ -202,6 +202,78 @@ function filterProducts(category) {
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+    // Detect if we're on the home page or store page
+    const isHomePage = document.body.classList.contains('home-page');
+    
+    if (isHomePage) {
+        // Initialize home page functionality
+        initializeHomePage();
+    } else {
+        // Initialize store page functionality
+        initializeStorePage();
+    }
+});
+
+// Home Page Initialization
+function initializeHomePage() {
+    console.log('Initializing home page...');
+    
+    // Initialize parallax controller
+    const parallaxController = new ParallaxController({
+        throttleDelay: 16,
+        rootMargin: '100px'
+    });
+    parallaxController.init();
+    
+    // Register parallax elements
+    document.querySelectorAll('.parallax-element').forEach(element => {
+        const speed = parseFloat(element.dataset.speed) || 0.5;
+        parallaxController.registerElement(element, {
+            speed: speed,
+            startOffset: -100,
+            endOffset: 100,
+            property: 'translateY'
+        });
+    });
+    
+    // Initialize product showcases
+    const showcase1 = new ProductShowcase('featured-products-1');
+    const showcase2 = new ProductShowcase('featured-products-2');
+    
+    // Load and display featured products
+    showcase1.init().then(() => {
+        console.log('Product showcase 1 initialized');
+    }).catch(error => {
+        console.error('Error initializing showcase 1:', error);
+    });
+    
+    // Initialize second showcase only if the element exists (home page)
+    if (document.getElementById('featured-products-2')) {
+        showcase2.init().then(() => {
+            console.log('Product showcase 2 initialized');
+        }).catch(error => {
+            console.error('Error initializing showcase 2:', error);
+        });
+    }
+    
+    // Initialize smooth scrolling for internal links
+    initializeSmoothScrolling();
+    
+    // Initialize scroll-triggered animations
+    initializeScrollAnimations();
+    
+    // Store reference for cleanup if needed
+    window.homePageInstances = {
+        parallaxController,
+        showcase1,
+        showcase2
+    };
+}
+
+// Store Page Initialization
+function initializeStorePage() {
+    console.log('Initializing store page...');
+    
     currentProducts = sortProducts(products, 'featured');
     renderProducts(currentProducts);
     
@@ -219,35 +291,191 @@ document.addEventListener('DOMContentLoaded', () => {
     const sortDropdown = document.getElementById('sort-dropdown');
     const sortLabel = document.getElementById('sort-label');
 
-    sortToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        sortDropdown.classList.toggle('active');
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', () => {
-        sortDropdown.classList.remove('active');
-    });
-
-    // Sort option selection
-    document.querySelectorAll('.sort-option').forEach(option => {
-        option.addEventListener('click', (e) => {
+    if (sortToggle && sortDropdown && sortLabel) {
+        sortToggle.addEventListener('click', (e) => {
             e.stopPropagation();
-            
-            // Update selected option
-            document.querySelectorAll('.sort-option').forEach(opt => opt.classList.remove('selected'));
-            option.classList.add('selected');
-            
-            // Update sort type and label
-            currentSort = option.dataset.sort;
-            sortLabel.textContent = option.textContent;
-            
-            // Apply sorting to current products
-            currentProducts = sortProducts(currentProducts, currentSort);
-            renderProducts(currentProducts);
-            
-            // Close dropdown
+            sortDropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', () => {
             sortDropdown.classList.remove('active');
         });
+
+        // Sort option selection
+        document.querySelectorAll('.sort-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                
+                // Update selected option
+                document.querySelectorAll('.sort-option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                
+                // Update sort type and label
+                currentSort = option.dataset.sort;
+                sortLabel.textContent = option.textContent;
+                
+                // Apply sorting to current products
+                currentProducts = sortProducts(currentProducts, currentSort);
+                renderProducts(currentProducts);
+                
+                // Close dropdown
+                sortDropdown.classList.remove('active');
+            });
+        });
+    }
+    
+    // Check for product parameter in URL (from home page navigation)
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('product');
+    if (productId) {
+        // Find and highlight the specific product
+        highlightProduct(productId);
+    }
+}
+
+// Smooth scrolling for internal navigation
+function initializeSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                const navHeight = document.querySelector('.home-nav').offsetHeight;
+                const targetPosition = target.offsetTop - navHeight - 20;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
     });
+}
+
+// Initialize scroll-triggered animations
+function initializeScrollAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '50px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+    
+    // Observe all elements with smooth-enter class
+    document.querySelectorAll('.smooth-enter').forEach(el => {
+        observer.observe(el);
+    });
+}
+
+// Highlight specific product (for navigation from home page)
+function highlightProduct(productId) {
+    setTimeout(() => {
+        const productCard = document.querySelector(`[data-id="${productId}"]`);
+        if (productCard) {
+            productCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Add glowing effect with blue color to match Apple theme
+            productCard.style.transform = 'scale(1.02)';
+            productCard.style.boxShadow = '0 0 30px rgba(0, 122, 255, 0.6), 0 0 60px rgba(0, 122, 255, 0.4)';
+            productCard.style.border = '2px solid rgba(0, 122, 255, 0.8)';
+            productCard.style.borderRadius = '12px';
+            
+            // Remove effect after 4 seconds
+            setTimeout(() => {
+                productCard.style.transform = '';
+                productCard.style.boxShadow = '';
+                productCard.style.border = '';
+                productCard.style.borderRadius = '';
+            }, 4000);
+        }
+    }, 500);
+}
+
+// Main initialization
+document.addEventListener('DOMContentLoaded', () => {
+    const isHomePage = document.body.classList.contains('home-page');
+    const isStorePage = document.getElementById('products-grid') !== null;
+    
+    if (isHomePage) {
+        // Initialize home page functionality
+        initializeHomePageParallax();
+        initializeScrollAnimations();
+    } else if (isStorePage) {
+        // Initialize store page functionality
+        currentProducts = sortProducts(products, 'featured');
+        renderProducts(currentProducts);
+        
+        // Filter button events
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                filterProducts(e.target.dataset.filter);
+            });
+        });
+
+        // Sort dropdown functionality
+        const sortToggle = document.getElementById('sort-toggle');
+        const sortDropdown = document.getElementById('sort-dropdown');
+        const sortLabel = document.getElementById('sort-label');
+
+        if (sortToggle && sortDropdown && sortLabel) {
+            sortToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                sortDropdown.classList.toggle('active');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', () => {
+                sortDropdown.classList.remove('active');
+            });
+
+            // Sort option selection
+            document.querySelectorAll('.sort-option').forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    
+                    // Update selected option
+                    document.querySelectorAll('.sort-option').forEach(opt => opt.classList.remove('selected'));
+                    option.classList.add('selected');
+                    
+                    // Update sort type and label
+                    currentSort = option.dataset.sort;
+                    sortLabel.textContent = option.textContent;
+                    
+                    // Apply sorting to current products
+                    currentProducts = sortProducts(currentProducts, currentSort);
+                    renderProducts(currentProducts);
+                    
+                    // Close dropdown
+                    sortDropdown.classList.remove('active');
+                });
+            });
+        }
+    }
+    
+    // Handle URL parameters for store navigation
+    const urlParams = new URLSearchParams(window.location.search);
+    const productParam = urlParams.get('product');
+    const filterParam = urlParams.get('filter');
+    
+    if (productParam && isStorePage) {
+        highlightProduct(productParam);
+    }
+    
+    if (filterParam && isStorePage) {
+        const filterBtn = document.querySelector(`[data-filter="${filterParam}"]`);
+        if (filterBtn) {
+            setTimeout(() => filterBtn.click(), 100);
+        }
+    }
+    
+    console.log(`${isHomePage ? 'Home' : 'Store'} page initialized`);
 });

@@ -1,0 +1,55 @@
+{
+  "featuredProducts": [
+    {
+      "id": "premium-headphones-pro",
+      "name": "Premium Headphones Pro",
+      "shortDescription": "Professional-grade wireless headphones with active noise cancellation and studio-quality sound.",
+      "heroImage": "🎧",
+      "emoji": "🎧",
+      "showcaseImages": [],
+      "price": 349.99,
+      "currency": "USD",
+      "features": [
+        "Active Noise Cancellation",
+        "30-hour battery life",
+        "Premium leather comfort"
+      ],
+      "isAvailableInStore": true,
+      "storeProductId": "1"
+    },
+    {
+      "id": "smart-watch-elite",
+      "name": "Smart Watch Elite", 
+      "shortDescription": "Advanced fitness tracking with health monitoring and seamless connectivity.",
+      "heroImage": "⌚",
+      "emoji": "⌚",
+      "showcaseImages": [],
+      "price": 599.99,
+      "currency": "USD",
+      "features": [
+        "Health monitoring",
+        "7-day battery life",
+        "Water resistant"
+      ],
+      "isAvailableInStore": true,
+      "storeProductId": "7"
+    },
+    {
+      "id": "luxury-backpack",
+      "name": "Luxury Travel Backpack",
+      "shortDescription": "Premium materials meet intelligent design for the modern traveler.",
+      "heroImage": "🎒",
+      "emoji": "🎒",
+      "showcaseImages": [],
+      "price": 199.99,
+      "currency": "USD",
+      "features": [
+        "Premium leather",
+        "TSA-approved",
+        "Laptop compartment"
+      ],
+      "isAvailableInStore": true,
+      "storeProductId": "9"
+    }
+  ]
+}

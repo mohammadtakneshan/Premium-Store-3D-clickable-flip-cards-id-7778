@@ -3,68 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Store</title>
+    <title>Premium Store - Discover Excellence</title>
     <link rel="stylesheet" href="styling.css">
+    <meta name="description" content="Discover our curated collection of premium products. Experience excellence in design, quality, and innovation.">
 </head>
-<body>
+<body class="home-page">
+    <!-- Navigation Header -->
     <header class="header">
         <nav class="nav">
-            <a href="#" class="logo">STORE</a>
+            <a href="#" class="logo">PREMIUM</a>
             <ul class="nav-links">
-                <li><a href="#new">New & Featured</a></li>
-                <li><a href="#men">Men</a></li>
-                <li><a href="#women">Women</a></li>
-                <li><a href="#kids">Kids</a></li>
-                <li><a href="#sale">Sale</a></li>
+                <li><a href="#hero">Home</a></li>
+                <li><a href="store.html">Store</a></li>
+                <li><a href="about.html">About</a></li>
             </ul>
-            <div class="nav-actions">
-                <div class="search-icon">🔍</div>
-                <div class="cart-icon">🛒</div>
-            </div>
         </nav>
     </header>
 
-    <section class="hero">
-        <h1>Premium Collection</h1>
-        <p>Discover our curated selection of premium products across multiple categories. Click any product to explore detailed features and specifications.</p>
-    </section>
-
-    <section class="filters-section">
-        <div class="filters-header">
-            <div class="results-count">Products (<span id="product-count">9</span>)</div>
-            <div class="sort-by" id="sort-toggle">
-                Sort By: <span id="sort-label">Featured</span> ↓
-                <div class="sort-dropdown" id="sort-dropdown">
-                    <div class="sort-option selected" data-sort="featured">Featured</div>
-                    <div class="sort-option" data-sort="price-low">Price: Low to High</div>
-                    <div class="sort-option" data-sort="price-high">Price: High to Low</div>
-                    <div class="sort-option" data-sort="name">Name: A to Z</div>
-                    <div class="sort-option" data-sort="newest">Newest</div>
+    <!-- Hero Section with Parallax -->
+    <section id="hero" class="hero-section parallax-container">
+        <div class="parallax-bg parallax-element" data-speed="0.5">
+            <div class="hero-background"></div>
+        </div>
+        <div class="hero-content container">
+            <div class="hero-text smooth-enter">
+                <h1>Experience Premium Excellence</h1>
+                <p class="subtitle">Discover our curated collection of premium products that combine innovative design with exceptional quality. Every item tells a story of craftsmanship and attention to detail.</p>
+                <div class="hero-actions">
+                    <a href="#products" class="smooth-button">Explore Collection</a>
                 </div>
             </div>
         </div>
-        <div class="filters">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="electronics">Electronics</button>
-            <button class="filter-btn" data-filter="property">Property</button>
-            <button class="filter-btn" data-filter="household">Household</button>
-            <button class="filter-btn" data-filter="fashion">Fashion</button>
-            <button class="filter-btn" data-filter="sports">Sports</button>
-            <button class="filter-btn" data-filter="automotive">Automotive</button>
+        <div class="scroll-indicator parallax-element" data-speed="0.3">
+            <div class="scroll-arrow">↓</div>
         </div>
     </section>
 
-    <section class="products-section">
-        <div class="products-grid" id="products-grid">
+    <!-- Featured Products Section 1 -->
+    <section id="products" class="product-showcase-section section-padding">
+        <div class="container">
+            <div class="section-header smooth-enter">
+                <h2>Featured Collection</h2>
+                <p class="subtitle">Our most popular products, chosen for their exceptional quality and innovative design.</p>
             </div>
+            <div class="products-grid" id="featured-products-1">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </div>
     </section>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <p>&copy; 2025 Premium Store. All rights reserved.</p>
+    <!-- Feature Highlight Section -->
+    <section class="feature-highlight-section parallax-container section-padding">
+        <div class="parallax-bg parallax-element" data-speed="0.3">
+            <div class="feature-background"></div>
+        </div>
+        <div class="container">
+            <div class="feature-content smooth-enter">
+                <h2>Crafted for Excellence</h2>
+                <p class="subtitle">Every product in our collection is carefully selected and rigorously tested to meet our standards of excellence. We believe in quality that speaks for itself.</p>
+                <div class="feature-stats">
+                    <div class="stat-item">
+                        <h3>10,000+</h3>
+                        <p>Happy Customers</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>98%</h3>
+                        <p>Satisfaction Rate</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>24/7</h3>
+                        <p>Customer Support</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator parallax-element" data-speed="0.3">
+            <div class="scroll-arrow">↓</div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section 2 -->
+    <section class="product-showcase-section section-padding">
+        <div class="container">
+            <div class="section-header smooth-enter">
+                <h2>Trending Now</h2>
+                <p class="subtitle">Discover the latest additions to our premium collection, handpicked for their innovation and style.</p>
+            </div>
+            <div class="products-grid" id="featured-products-2">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section parallax-container section-padding">
+        <div class="parallax-bg parallax-element" data-speed="0.4">
+            <div class="cta-background"></div>
+        </div>
+        <div class="container">
+            <div class="cta-content smooth-enter">
+                <h2>Ready to Experience Premium?</h2>
+                <p class="subtitle">Explore our full collection of premium products with detailed specifications, 3D views, and expert reviews.</p>
+                <div class="cta-actions">
+                    <a href="store.html" class="smooth-button">Explore Full Store</a>
+                    <a href="#hero" class="smooth-button">Back to Top</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="home-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>PREMIUM</h3>
+                    <p>Excellence in every detail</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h4>Shop</h4>
+                        <ul>
+                            <li><a href="store.html">All Products</a></li>
+                            <li><a href="store.html?filter=electronics">Electronics</a></li>
+                            <li><a href="store.html?filter=fashion">Fashion</a></li>
+                            <li><a href="store.html?filter=lifestyle">Lifestyle</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Support</h4>
+                        <ul>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Shipping Info</a></li>
+                            <li><a href="#">Returns</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="#">Privacy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Premium Store. All rights reserved.</p>
+            </div>
         </div>
     </footer>
 
+    <!-- Scripts -->
+    <script src="components/parallax-controller.js"></script>
+    <script src="components/product-showcase.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
