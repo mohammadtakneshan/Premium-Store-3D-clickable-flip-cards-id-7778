@@ -110,7 +110,7 @@ class ProductShowcase {
                     >`
                 }
                 <div class="premium-card-overlay">
-                    <div class="premium-card-price">$${product.price}</div>
+                    <div class="premium-card-price">${product.price}</div>
                 </div>
             </div>
             <div class="premium-card-content">
@@ -225,7 +225,7 @@ class ProductShowcase {
         console.log('Product details:', product);
         
         // Future: Open modal or expand card with detailed info
-        alert(`${product.name}\n\n${product.shortDescription}\n\nFeatures:\n${product.features.join('\n')}\n\nPrice: $${product.price}`);
+        alert(`${product.name}\n\n${product.shortDescription}\n\nFeatures:\n${product.features.join('\n')}\n\nPrice: ${product.price}`);
     }
 
     /**

@@ -7,8 +7,8 @@
       "heroImage": "🎧",
       "emoji": "🎧",
       "showcaseImages": [],
-      "price": 349.99,
-      "currency": "USD",
+      "price": "AED 1,099",
+      "currency": "AED",
       "features": [
         "Active Noise Cancellation",
         "30-hour battery life",
@@ -24,8 +24,8 @@
       "heroImage": "⌚",
       "emoji": "⌚",
       "showcaseImages": [],
-      "price": 599.99,
-      "currency": "USD",
+      "price": "AED 1,649",
+      "currency": "AED",
       "features": [
         "Health monitoring",
         "7-day battery life",
@@ -41,8 +41,8 @@
       "heroImage": "🎒",
       "emoji": "🎒",
       "showcaseImages": [],
-      "price": 199.99,
-      "currency": "USD",
+      "price": "AED 3,299",
+      "currency": "AED",
       "features": [
         "Premium leather",
         "TSA-approved",
