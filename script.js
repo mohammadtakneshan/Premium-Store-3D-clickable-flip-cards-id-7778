@@ -341,7 +341,7 @@ function initializeSmoothScrolling() {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
-                const navHeight = document.querySelector('.home-nav').offsetHeight;
+                const navHeight = document.querySelector('.header')?.offsetHeight || 60;
                 const targetPosition = target.offsetTop - navHeight - 20;
                 
                 window.scrollTo({
